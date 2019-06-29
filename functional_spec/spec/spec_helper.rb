@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'pty'
 require 'timeout'
+require_relative '../../bin/lib/job_queu.rb'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

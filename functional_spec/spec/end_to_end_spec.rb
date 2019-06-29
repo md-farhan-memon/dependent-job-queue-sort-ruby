@@ -5,7 +5,7 @@ RSpec.describe 'End To End Suite' do
     let(:commands) do
       [
         "\n",
-        "a =>\n\m",
+        "a =>\n\n",
         "a =>\nb =>\nc =>\n\n",
         "a =>\nb => c\nc =>\n\n",
         "a =>\nb => c\nc => f\nd => a\ne => b\nf =>\n\n",
