@@ -2,15 +2,10 @@ require 'rspec/core/rake_task'
 
 namespace :spec do
   desc 'Run the functional suite against the CLI'
-  RSpec::Core::RakeTask.new(:functional, [] => [:set_path])
+  RSpec::Core::RakeTask.new(:functional)
 
   desc 'Run the unit test cases against the CLI'
-  RSpec::Core::RakeTask.new(:unit, [] => [:set_path]) do |t|
+  RSpec::Core::RakeTask.new(:unit) do |t|
     t.rspec_opts = '--tag unit'
-  end
-
-  task :set_path do
-    project_bin_dir = File.join(File.dirname(File.expand_path(__FILE__)), '..', 'bin')
-    ENV['PATH'] = project_bin_dir + ':' + ENV['PATH']
   end
 end

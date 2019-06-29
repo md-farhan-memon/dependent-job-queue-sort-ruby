@@ -24,5 +24,11 @@ RSpec.describe 'Graph', unit: true do
       graph.add_edge('a', 'b')
       expect(graph.vertices_hash.count).to eql(2)
     end
+
+    it 'returns all vertices in a graph' do
+      graph.add_edge('a', 'b')
+      graph.add_edge('c', 'd')
+      expect(graph.vertices).to eql(%w[a b c d])
+    end
   end
 end

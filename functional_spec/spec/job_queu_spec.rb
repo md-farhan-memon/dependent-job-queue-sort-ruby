@@ -37,6 +37,7 @@ RSpec.describe 'Job Queu', unit: true do
     it 'can reset the graph' do
       job_queu.add('a => b')
       job_queu.add('b =>')
+      job_queu.prioritize
       job_queu.reset!
       expect(job_queu.graph.vertices_hash).to eql({})
       expect(job_queu.sorted_list).to eql([])

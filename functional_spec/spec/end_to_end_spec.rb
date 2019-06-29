@@ -18,17 +18,17 @@ RSpec.describe 'End To End Suite' do
       [
         "\n",
         "a\n",
-        "a, b, c\n",
-        "a, c, b\n",
-        "a, d, f, c, b, e\n",
-        "Error: Jobs can’t depend on themselves.\n",
-        "Error: Jobs can’t have circular dependencies.\n"
+        "c, b, a\n",
+        "c, b, a\n",
+        "f, c, b, e, a, d\n",
+        "Error: Jobs can't depend on themselves.\n\n",
+        "Error: Jobs can't have circular dependency.\n"
       ]
     end
 
     it 'interactive shell input' do
-      pty = PTY.spawn('ruby execute.rb')
-      puts "\nTesting interactive shell input: "
+      project_bin_dir = File.join(File.dirname(File.expand_path(__FILE__)), '..', '..', 'bin')
+      pty = PTY.spawn("ruby #{project_bin_dir}/execute.rb")
       commands.each_with_index do |cmd, index|
         puts cmd
         run_command(pty, cmd)

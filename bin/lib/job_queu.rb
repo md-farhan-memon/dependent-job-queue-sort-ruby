@@ -1,4 +1,5 @@
 require_relative 'graph.rb'
+require_relative 'topological_sort.rb'
 
 # Treating the job queu dependency as a Directed Adjacency Graph
 # where the graph is directed from u -> v
@@ -33,7 +34,7 @@ class JobQueu
     # a is dependent on b and so b is to be performed before a
     array.reverse!
 
-    raise SelfDependentJobError, "Job '#{array.first}' depends on itself" if dependent_jobs?(array)
+    raise SelfDependentJobError, "Jobs can't depend on themselves." if dependent_jobs?(array)
 
     @graph.add_edge(*array)
   end
@@ -45,12 +46,25 @@ class JobQueu
   end
 
   def prioritize
-    # TODO: writing the sorting algorithm
+    @sorted_list = topological_sort if @sorted_list.empty?
+
+    raise CircularDependencyError, "Jobs can't have circular dependency." unless acyclic?
+
+    @sorted_list.compact
   end
 
   private
 
+  def topological_sort
+    t_sort = TopologicalSort.new(@graph.vertices_hash)
+    t_sort.perform
+  end
+
   def dependent_jobs?(array)
     array[0].eql?(array[1])
+  end
+
+  def acyclic?
+    @sorted_list.count.eql?(graph.vertices.count)
   end
 end

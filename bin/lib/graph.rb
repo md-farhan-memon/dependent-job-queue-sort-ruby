@@ -18,6 +18,11 @@ class Graph
     @vertices_hash[u].add(v)
   end
 
+  # Returns all vertices of the graph
+  def vertices
+    vertices_hash.keys
+  end
+
   private
 
   # Add vertex with an empty set if it is uninitialized

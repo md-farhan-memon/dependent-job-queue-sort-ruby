@@ -9,10 +9,20 @@ require_relative 'lib/job_queu.rb'
 until (command = STDIN.gets.chomp).eql?('exit')
   # Prioritize the job queu if all job structures are entered - empty input
   if command.empty?
-    puts @job_queu.prioritize
+    begin
+      puts @job_queu.prioritize.join(', ')
+    rescue JobQueu::CircularDependencyError => e
+      puts "Error: #{e.message}"
+      @job_queu.reset!
+    end
     @job_queu.reset!
   # Else add the structure to the queu
   else
-    @job_queu.add(command)
+    begin
+      @job_queu.add(command)
+    rescue JobQueu::SelfDependentJobError => e
+      puts "Error: #{e.message}"
+      @job_queu.reset!
+    end
   end
 end
